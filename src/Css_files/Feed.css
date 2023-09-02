@@ -1,0 +1,76 @@
+.feed{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    /* align-items: center; */
+}
+.feed_input{   
+    display: flex;
+    padding: 15px 25px 0px 10px;
+    border-radius: 10px;
+    background-color: #f3f2ef;
+}
+
+.feed_input form{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    flex: 1;
+}
+.feed_input form input[type='text']{
+    flex: 1;
+    border-radius: 18px;
+    padding: 0px 10px;
+    margin-left: 10px;
+    height: 40px;
+    outline: 0;
+    border: 1px solid grey;
+}
+.feed_input form input[type='submit']{
+   visibility: hidden;
+}
+.feed_options{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 5px;
+    padding-top: 10px;
+    background-color: #ffffff;
+    padding-bottom: 10px;
+}
+.custom-icon-1 {
+    color: rgb(203, 79, 234);
+    cursor: pointer;
+}
+
+.custom-icon-2 {
+    color: rgb(224, 36, 55);
+    cursor: pointer;
+}
+.custom-icon-3{
+    color: rgb(209, 195, 36);
+    cursor: pointer;
+}
+.custom-icon-4{
+    color: rgb(45, 194, 107);
+    cursor: pointer;
+}
+@media only screen and (max-width: 600px) {
+    .feed{
+        width: 100%;
+        margin-right: 10px;
+    }
+    
+}
+@media only screen and (max-width: 800px) {
+    .feed{
+        width: 100%;
+        margin-left: 10px;
+    }
+}
+@media only screen and (min-width: 800px) {
+    .feed{
+        width: 50%;
+    }
+    
+}
