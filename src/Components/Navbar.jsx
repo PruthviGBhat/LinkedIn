@@ -48,7 +48,7 @@ const Navbar = () => {
     const handleCloseClick = () => {
         setIsSearchOpen(isSearchOpen);
     };
-
+   
     return (
         <>
             <div className={isActive ? "header active" : "header"}>

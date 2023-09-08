@@ -96,8 +96,8 @@ const Feed = () => {
         </div>
     );
 
-
-    return (
+   
+   return (
         <>
             <div className='feed'>
                 <div className='feed_input'>

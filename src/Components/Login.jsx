@@ -1,5 +1,9 @@
 import { Password } from '@mui/icons-material'
 import React, { useState } from 'react'
+import { useAuth } from './AuthContext';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {auth} from './firebase'
+
 
 const Login = () => {
     const [signin, setSignin] = useState(false);
@@ -8,9 +12,47 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [photoURL, setPhotoURL] = useState("");
 
+    const { login } = useAuth();
+
     const register = (e) => {
         e.preventDefault();
+        // if (!name) {
+        //     alert("Please Enter the Name");
+        // }
+        // if (!email) {
+        //     alert("Please Enter the Email");
+        // }
+        // if (!password) {
+        //     alert("Please Enter the Password");
+        // }
+        // if (!photoURL) {
+        //     alert("Please Enter the PhotoURL");
+        // }
+
+        setName("");
+        setEmail("");
+        setPassword("");
+        setPhotoURL("");  
+        
+        try {
+            if (signin) {
+              const userCredential =  signInWithEmailAndPassword(login, email, password);
+              const user = userCredential.user;
+              login(user);
+            } else {
+              const userCredential =  createUserWithEmailAndPassword(login, email, password);
+              const user = userCredential.user;
+              login(user);
+            }
+          } catch (error) {
+            console.error(error.message);
+          }
     }
+
+    
+
+
+
     return (
         <>
             <div className='flex justify-center items-center text-white space-x-3 font-bold text-2xl bg-gray-900 '>
@@ -50,7 +92,7 @@ const Login = () => {
                                         </div>
                                         <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
                                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                            Already a member? <a href="#" className="font-medium text-white hover:underline"  onClick={e=>setSignin(false)}>Login</a>
+                                            Already a member? <a href="#" className="font-medium text-white hover:underline" onClick={e => setSignin(false)}>Login</a>
                                         </p>
                                     </form>
                                 </div>
@@ -78,7 +120,7 @@ const Login = () => {
 
                                         <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Login</button>
                                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                            Don’t have an account yet? <a href="#" className="font-medium text-white hover:underline " onClick={e=>setSignin(true)}>Sign up</a>
+                                            Don’t have an account yet? <a href="#" className="font-medium text-white hover:underline " onClick={e => setSignin(true)}>Sign up</a>
                                         </p>
                                     </form>
                                 </div>
