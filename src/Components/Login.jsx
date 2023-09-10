@@ -1,8 +1,8 @@
 import { Password } from '@mui/icons-material'
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 import { useAuth } from './AuthContext';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import {auth} from './firebase'
+import {auth} from './firebase';
 
 
 const Login = () => {
@@ -13,40 +13,38 @@ const Login = () => {
     const [photoURL, setPhotoURL] = useState("");
 
     const { login } = useAuth();
+    
+
+
+   
 
     const register = (e) => {
         e.preventDefault();
-        // if (!name) {
-        //     alert("Please Enter the Name");
-        // }
-        // if (!email) {
-        //     alert("Please Enter the Email");
-        // }
-        // if (!password) {
-        //     alert("Please Enter the Password");
-        // }
-        // if (!photoURL) {
-        //     alert("Please Enter the PhotoURL");
-        // }
 
         setName("");
         setEmail("");
         setPassword("");
         setPhotoURL("");  
+
+          if (email === "") {
+        throw new Error("Email address is missing");
+    }
+
         
         try {
             if (signin) {
-              const userCredential =  signInWithEmailAndPassword(login, email, password);
+              const userCredential =  signInWithEmailAndPassword(auth, email, password);
               const user = userCredential.user;
               login(user);
             } else {
-              const userCredential =  createUserWithEmailAndPassword(login, email, password);
+              const userCredential =  createUserWithEmailAndPassword(auth, email, password);
               const user = userCredential.user;
               login(user);
             }
           } catch (error) {
             console.error(error.message);
           }
+          window.location.href = "#";
     }
 
     
@@ -100,7 +98,7 @@ const Login = () => {
                         </div>
                     </section>
                 ) : (
-                    <section className="bg-gray-900 -mt-20">
+                    <section className="bg-gray-900 -mt-20" >
                         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 
                             <div className="w-full  rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 bg-gray-800">
