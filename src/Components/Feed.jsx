@@ -7,15 +7,11 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from '@mui/icons-material/Edit';
 import { Avatar } from '@mui/material';
 import { initializeApp } from 'firebase/app'
-import {
-    Firestore,
-    getFirestore, collection, getDocs
-} from 'firebase/firestore'
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-
 import db from "./firebase"
 import { doc, setDoc, query, orderBy, onSnapshot } from "firebase/firestore";
 
@@ -49,6 +45,7 @@ const Feed = () => {
 
     useEffect(() => {
         const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+
         const unsubscribe = onSnapshot(q, (snapshot) => {
             setposts(snapshot.docs.map((doc) => ({
                 id: doc.id,
@@ -60,9 +57,22 @@ const Feed = () => {
             unsubscribe();
         };
     }, []);
+    // useEffect(() => {
+    //     const q = collection(db, "posts");
+    //     const unsubscribe = onSnapshot(q, (snapshot) => {
+    //         setposts(
+    //             snapshot.docs.map((doc) => ({
+    //                 id: doc.id,
+    //                 data: doc.data(),
+    //             }))
+    //         );
+    //     });
+    //     return () => {
+    //         unsubscribe();
+    //     };
+    // }, []);
+    
 
-
-   
 
     const handleFileChange = (e) => {
         setSelectedFile(e.target.files[0]);
@@ -96,8 +106,8 @@ const Feed = () => {
         </div>
     );
 
-   
-   return (
+
+    return (
         <>
             <div className='feed'>
                 <div className='feed_input'>

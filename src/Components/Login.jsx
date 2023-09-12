@@ -1,9 +1,8 @@
-import { Password } from '@mui/icons-material'
 import React, { useState} from 'react'
-import { useAuth } from './AuthContext';
+import { useDispatch } from "react-redux";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from './firebase';
-
+import { login} from "./User";
 
 const Login = () => {
     const [signin, setSignin] = useState(false);
@@ -11,45 +10,53 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [photoURL, setPhotoURL] = useState("");
-
-    const { login } = useAuth();
+    const [profilePic, setProfilePic] = useState("");
     
 
+    const dispatch = useDispatch();
 
-   
-
-    const register = (e) => {
+    const register = () => {
+      if (!name) {
+        return alert("Please enter a full name");
+      }
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((userAuth) => {
+          userAuth.user
+            .updateProfile({
+              displayName: name,
+              photoURL: profilePic,
+            })
+            .then(() => {
+              dispatch(
+                login({
+                  email: userAuth.user.email,
+                  uid: userAuth.user.uid,
+                  displayName: name,
+                  photoUrl: profilePic,
+                })
+              );
+            });
+        })
+        .catch((error) => alert(error));
+    };
+    const loginToApp = (e) => {
         e.preventDefault();
-
-        setName("");
-        setEmail("");
-        setPassword("");
-        setPhotoURL("");  
-
-          if (email === "") {
-        throw new Error("Email address is missing");
-    }
-
-        
-        try {
-            if (signin) {
-              const userCredential =  signInWithEmailAndPassword(auth, email, password);
-              const user = userCredential.user;
-              login(user);
-            } else {
-              const userCredential =  createUserWithEmailAndPassword(auth, email, password);
-              const user = userCredential.user;
-              login(user);
-            }
-          } catch (error) {
-            console.error(error.message);
-          }
-          window.location.href = "#";
-    }
-
+        auth
+          .signInWithEmailAndPassword(email, password)
+          .then((userAuth) => {
+            dispatch(
+              login({
+                email: userAuth.user.email,
+                uid: userAuth.user.uid,
+                displayName: userAuth.user.displayName,
+                profileUrl: userAuth.user.photoURL,
+              })
+            );
+          })
+          .catch((error) => alert(error));
+    };
     
-
-
 
     return (
         <>
@@ -106,7 +113,7 @@ const Login = () => {
                                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                                         Login to your account
                                     </h1>
-                                    <form className="space-y-4 md:space-y-6" onSubmit={register}>
+                                    <form className="space-y-4 md:space-y-6" onSubmit={loginToApp}>
                                         <div>
                                             <label for="email" className="block mb-2 text-sm font-medium text-white">Your email</label>
                                             <input type="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" value={email} onChange={e => setEmail(e.target.value)} />
