@@ -4,7 +4,7 @@ import Navbar from './Navbar.jsx';
 import Sidebar from './Sidebar';
 import Newsfeed from './Newsfeed';
 import Login from './Login';
-import {login,logout,selectUser} from "./User"
+import {login,logout,selectUser} from "../User"
 import { useEffect } from 'react';
 import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,6 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
-        //user is logged in
         dispatch(
           login({
             email: userAuth.email,
@@ -25,7 +24,6 @@ function App() {
           })
         );
       } else {
-        //user is logged out
         dispatch(logout());
       }
     });

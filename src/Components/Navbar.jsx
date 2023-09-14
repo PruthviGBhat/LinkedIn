@@ -8,10 +8,24 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import MessageIcon from '@mui/icons-material/Message';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Avatar from '@mui/material/Avatar';
+import {logout} from '../User'
+import {auth} from "./firebase"
+import { useDispatch } from 'react-redux';
+import { useSelector } from "react-redux";
+import { selectUser } from "../User";
+
 
 const Navbar = () => {
+    const user = useSelector(selectUser);
     const [isActive, setIsActive] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const logoutOfApp = () => {
+        dispatch(logout());
+        auth.signOut();
+    };
 
     useEffect(() => {
         const header = document.querySelector(".header");
@@ -48,7 +62,7 @@ const Navbar = () => {
     const handleCloseClick = () => {
         setIsSearchOpen(isSearchOpen);
     };
-   
+
     return (
         <>
             <div className={isActive ? "header active" : "header"}>
@@ -76,12 +90,9 @@ const Navbar = () => {
                         ))}
 
                     </div>
-                    {/* <div className='p-2 px-5 ml-5 mr-5 text-white rounded-md bg-zinc-700'>
-                        <button>Login</button>
-                    </div> */}
                 </div>
-                <div className='avatar'>
-                    <Avatar src="https://images.unsplash.com/photo-1588862081167-d5b98006637e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YmF0bWFufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" />
+                <div className='avatar' onClick={logoutOfApp} >
+                    <Avatar src={user.photoURL} />
                 </div>
             </div>
         </>

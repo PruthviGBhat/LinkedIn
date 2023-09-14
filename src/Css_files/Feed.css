@@ -39,20 +39,20 @@
     padding-bottom: 10px;
 }
 .custom-icon-1 {
-    color: rgb(203, 79, 234);
+    color: rgb(67, 135, 237);
     cursor: pointer;
 }
 
 .custom-icon-2 {
-    color: rgb(224, 36, 55);
+    color: rgb(45, 221, 139);
     cursor: pointer;
 }
 .custom-icon-3{
-    color: rgb(209, 195, 36);
+    color: rgb(186, 170, 0);
     cursor: pointer;
 }
 .custom-icon-4{
-    color: rgb(45, 194, 107);
+    color: rgb(246, 20, 95);
     cursor: pointer;
 }
 @media only screen and (max-width: 600px) {

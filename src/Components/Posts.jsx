@@ -7,8 +7,11 @@ import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { hover } from '@testing-library/user-event/dist/hover';
+import { useSelector } from "react-redux";
+import { selectUser } from "../User";
 
 const Posts = ({ name, description, message, photoURL }) => {
+    const user = useSelector(selectUser);
 
     const [likeClicked, setlikeClicked] = useState(false);
 
