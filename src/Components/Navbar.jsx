@@ -93,6 +93,7 @@ const Navbar = () => {
                 </div>
                 <div className='avatar' onClick={logoutOfApp} >
                     <Avatar src={user.photoURL} />
+                    <p>Logout</p>
                 </div>
             </div>
         </>
